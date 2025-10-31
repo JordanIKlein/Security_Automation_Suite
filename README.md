@@ -61,6 +61,45 @@ pip install -r requirements.txt
 
 This installs the `click` package used by the CLI tools.
 
+## Running the DNS Scanner
+
+The DNS scanner lives at `scanners/dns_scanner.py`. It resolves common record types (A, AAAA, CNAME, MX, TXT, NS, SOA), can use a custom nameserver, optionally attempts zone transfer (AXFR), checks for wildcard DNS, and can output JSON.
+
+Resolve common records:
+
+```bat
+python scanners\dns_scanner.py example.com
+```
+
+Pick specific record types and JSON output:
+
+```bat
+python scanners\dns_scanner.py example.com --types A AAAA MX TXT --json
+```
+
+Use a specific nameserver and timeout:
+
+```bat
+python scanners\dns_scanner.py example.com --nameserver 8.8.8.8 --timeout 3
+```
+
+Attempt a zone transfer (AXFR) from NS servers:
+
+```bat
+python scanners\dns_scanner.py example.com --axfr
+```
+
+Check for wildcard DNS:
+
+```bat
+python scanners\dns_scanner.py example.com --check-wildcard
+```
+
+Notes:
+- AXFR attempts are best-effort and often blocked in production; if allowed, only a small sample of records is shown.
+- Wildcard check probes a random subdomain and reports if it resolves (indicating wildcard DNS).
+- You can combine flags, e.g., `--axfr --check-wildcard --json`.
+
 ## Running the HTTP/TLS Security Scanner
 
 The HTTP/TLS scanner lives at `scanners/http_tls_security_scanner.py`. It probes an endpoint (HTTP or HTTPS), follows redirects, reports final headers, and for HTTPS shows TLS version, cipher, and certificate details. It also flags common missing security headers.
