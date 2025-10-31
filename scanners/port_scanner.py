@@ -5,7 +5,7 @@ from typing import List
 
 # Example of a simple port scanner using Python and Click
 # python port_scanner.py IP_ADDRESS
-
+# python port_scanner.py IP_ADDRESS --port 443
 
 # Commonly used and important ports to scan
 COMMON_PORTS = [
